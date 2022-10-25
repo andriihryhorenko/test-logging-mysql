@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "8165e4b7-2ee3-486a-bf2c-25ea0cf52c71": {
+      "ProjectGuid": "8165e4b7-2ee3-486a-bf2c-25ea0cf52c71",
+      "DisplayName": "myssql-.netcore-test-app",
+      "ColorIndex": 0
+    },
+    "867d7a2a-e72d-458b-9619-9798e877bde4": {
+      "ProjectGuid": "867d7a2a-e72d-458b-9619-9798e877bde4",
+      "DisplayName": "docker-compose",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

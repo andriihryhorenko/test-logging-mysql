@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Eruov25OL9AjWzQx222GO32AKKnVHbg5M3s5akd1BmQ=",
+  "Source": "myssql-.netcore-test-app",
+  "BasePath": "_content/myssql-.netcore-test-app",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

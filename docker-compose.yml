@@ -1,0 +1,142 @@
+version: '3.4'
+
+services:
+   mysql:
+    image: mysql:8
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql8.0/conf.d/my.cnf:/etc/my.cnf:ro
+      - ./mysql8.0/logs:/var/log/mysql:rw
+    networks:
+      - log-system
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass123123
+      - MYSQL_PASSWORD=pass123123
+      - MYSQL_USER=myuser
+      - MYSQL_DATABASE=mydb
+      
+    
+   mongodb:
+    image: mongo:3
+    command: "mongod --config /conf/mongo.conf"
+    networks:
+      - log-system
+    volumes:
+      - "mongodata:/data"
+      - "./mongo:/conf/"
+      
+   elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.1
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - log-system
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+   graylog:
+    image: graylog/graylog:4.3.8
+    depends_on:
+      - elasticsearch
+      - mongodb
+    environment:
+      GRAYLOG_PASSWORD_SECRET: Bgw7mYROifuwMCojIcuQ0PYCiuwtOWNSIQBV6fbIfNIzpFFxKrVcRDOxJOPBmjHPhOA5uT928Ll9LlfpPEWxsy9a4VSgZebo
+      GRAYLOG_ROOT_PASSWORD_SHA2: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+      GRAYLOG_WEB_ENDPOINT_URI: http://127.0.0.1:9000/api
+      GRAYLOG_MONGODB_URI: mongodb://mongodb.service/graylog
+      GRAYLOG_MONGODB_MAX_CONNECTIONS: 100
+      GRAYLOG_MONGODB_THREADS_ALLOWED_TO_BLOCK_MULTIPLIER: 5
+      GRAYLOG_ELASTICSEARCH_CLUSTER_NAME: graylog
+    volumes:
+      - "graylogdata:/opt/graylog/data"
+      - "./plugin/:/opt/graylog/plugin/"
+    links:
+      - "elasticsearch:elasticsearch"
+      - "mongodb:mongodb.service"
+    networks:
+      - log-system
+    ports:
+      - "9000:9000"
+      - "12201:12201/udp"
+      - "1514:1514/udp"
+
+           
+   graylog-sidecar:
+     image: markusgulden/graylog2-sidecar-docker
+     container_name: sidecar
+     environment:
+        -  GS_SERVER_URL=http://graylog:9000/api/
+        -  GS_NODE_ID=mysql-logs-index
+        -  GS_SERVER_API_TOKEN=1u6g0qioo72khr4kp2831jji1b1gl0cg97t0il44h476p31oipve
+        -  GS_LIST_LOG_FILES=/var/log/mysql
+     volumes:
+        - ./mysql8.0/logs:/var/log/mysql
+     networks:
+        - log-system
+     depends_on:
+        - graylog
+      
+      
+      
+
+
+   kibana:
+     container_name: kibana
+     image: docker.elastic.co/kibana/kibana:7.17.1
+     environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+     ports:
+      - 5601:5601
+     networks:
+      - log-system
+     depends_on:
+      - elasticsearch
+      
+      
+  
+   filebeat:
+    image: docker.elastic.co/beats/filebeat:6.2.2
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./mysql8.0/logs:/usr/share/filebeat/logs
+    networks:
+      - log-system
+    links:
+       - elasticsearch
+       - kibana
+      
+volumes:
+   my-db:
+
+   esdata:
+    driver: local
+   graylogdata:
+    driver: local
+   mongodata:
+    driver: local
+
+networks:
+  log-system:
+    driver: bridge
+
+    
+
+
+  

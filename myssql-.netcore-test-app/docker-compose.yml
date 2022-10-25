@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+    myssql-.netcore-test-app:
+     container_name: mysql
+     hostname: mysql
+     image: ${DOCKER_REGISTRY-}myssqlnetcoretestapp
+     restart: always
+     network_mode: "host"
+     build:
+       context: .
+       dockerfile: Dockerfile,
+     ports:
+         - "8000:80"
+     depends_on:
+          - mysql
+
+
+volumes:
+   my-db:
+
+
+  
