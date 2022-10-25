@@ -8,12 +8,12 @@ setup.template.pattern: "filebeat-*"
 setup.dashboards.enabled: true
 
 setup.kibana:
-  host: http://ai.lisuto.com:5601
+  host: http://kibana:5601
   username: elastic
   password: elastic
 
 output.elasticsearch:
-  hosts: ["http://localhost:9200"]
+  hosts: ["http://elasticsearch:9200"]
   username: elastic
   password: elastic
   index: "filebeat-%{[beat.version]}-%{+yyyy.MM.dd}"
