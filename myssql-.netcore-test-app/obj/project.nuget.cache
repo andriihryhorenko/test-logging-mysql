@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "ClVM8aCajx/NBnTrjfR+KE9dM8GGLGFo5HonOM5SpSYTESXfEigb1Ls2n4mw6NG8w/dppLOS0wXYnG1DCJKvGw==",
+  "dgSpecHash": "Qanu50u8fJj1uvMkCYehySAm+KQ+3OvTVSnBTs6XOm6zvhjsdmfS6x1tnebyIpr6ddCaRMgrND5QUuqCN7Dolw==",
   "success": true,
   "projectFilePath": "D:\\GITHub\\test-logging-mysql\\myssql-.netcore-test-app\\myssql-.netcore-test-app.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\grg_a\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\grg_a\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.9\\microsoft.aspnet.webapi.client.5.2.9.nupkg.sha512",
     "C:\\Users\\grg_a\\.nuget\\packages\\microsoft.aspnet.webapi.core\\5.2.9\\microsoft.aspnet.webapi.core.5.2.9.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
+    "C:\\Users\\grg_a\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
     "C:\\Users\\grg_a\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.10\\microsoft.entityframeworkcore.6.0.10.nupkg.sha512",
     "C:\\Users\\grg_a\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.10\\microsoft.entityframeworkcore.abstractions.6.0.10.nupkg.sha512",
     "C:\\Users\\grg_a\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.10\\microsoft.entityframeworkcore.analyzers.6.0.10.nupkg.sha512",

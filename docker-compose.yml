@@ -7,15 +7,17 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./mysql8.0/conf.d/my.cnf:/etc/my.cnf:ro
-      - ./mysql8.0/logs:/var/log/mysql:rw
+      - "mysql-data:/var/lib/mysql"
+      - "mysql-log:/var/log/mysql"
+      - "mysql-conf:/etc/mysql/conf.d"
+      - "/mysql8.0/conf.d/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf"
     networks:
       - log-system
     environment:
-      - MYSQL_ROOT_PASSWORD=pass123123
-      - MYSQL_PASSWORD=pass123123
-      - MYSQL_USER=myuser
-      - MYSQL_DATABASE=mydb
+      MYSQL_ROOT_PASSWORD: pass123123
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: pass123123
       
     
    mongodb:
@@ -82,11 +84,11 @@ services:
      container_name: sidecar
      environment:
         -  GS_SERVER_URL=http://graylog:9000/api/
-        -  GS_NODE_ID=mysql-logs-index
-        -  GS_SERVER_API_TOKEN=1u6g0qioo72khr4kp2831jji1b1gl0cg97t0il44h476p31oipve
+        -  GS_NODE_ID=mysql-logs
+        -  GS_SERVER_API_TOKEN=b5mrb1voblkccuplcru7surajieqadmr2kogctcu3e56c1eilst
         -  GS_LIST_LOG_FILES=/var/log/mysql
      volumes:
-        - ./mysql8.0/logs:/var/log/mysql
+        - "mysql-log:/var/log/mysql"
      networks:
         - log-system
      depends_on:
@@ -123,14 +125,19 @@ services:
        - kibana
       
 volumes:
-   my-db:
-
    esdata:
-    driver: local
+        driver: local
    graylogdata:
-    driver: local
+        driver: local
    mongodata:
-    driver: local
+        driver: local
+   mysql-data:
+        driver: local
+   mysql-log:
+        driver: local
+   mysql-conf:
+        driver: local
+
 
 networks:
   log-system:
